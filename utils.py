@@ -3,7 +3,7 @@ from cfg import *
 
 async def get_data_from_bx24(id_):
     async with ClientSession() as sess:
-        res = await sess.post(url=f"https://btg24.bitrix24.ru/rest/44/{keyWebhookBX24}/crm.deal.get?ID={id_}")
+        res = await sess.post(url=f"https://btg24.bitrix24.ru/rest/{userId_bx24}/{keyWebhookBX24}/crm.deal.get?ID={id_}")
         data = await res.json()
         
     return data.get("result", {})
@@ -55,7 +55,7 @@ async def post_data_to_ruk(route, direction, inn, btg_manager_kam, comment_on_th
         
 async def get_worker_from_bx24(id_):
     async with ClientSession() as sess:
-        res = await sess.post(url=f"https://btg24.bitrix24.ru/rest/44/{keyWebhookBX24}/im.user.get.json?ID={id_}")
+        res = await sess.post(url=f"https://btg24.bitrix24.ru/rest/{userId_bx24}/{keyWebhookBX24}/im.user.get.json?ID={id_}")
         data = await res.json()
     
     return data.get("result", {}).get("name", "")

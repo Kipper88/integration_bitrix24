@@ -29,6 +29,20 @@ async def receive_webhook(request: Request):
         data_bx24 = await get_data_from_bx24(id_deal_bx24)
         logger.info(f"Получены данные сделки из BX24")
 
+        ###########################################################
+        ###########################################################
+        ###########################################################
+
+        checkStatus = CheckUpdateStatus()
+        status_bx24 = data_bx24.get("STAGE_ID", "")
+        if not checkStatus.checkStatusBx24(id_deal_bx24, status_bx24):
+            logger.info(f"Статус не совпадает с необходимыми")
+            return Response(status_code=200)
+        
+        ###########################################################
+        ###########################################################
+        ###########################################################
+
         id_worker_bx24 = data_bx24.get("ASSIGNED_BY_ID", "")
         name_bx24 = await get_worker_from_bx24(id_worker_bx24)
         id_worker_rukovoditel = await get_worker_from_rukovoditel(name_bx24)

@@ -1,4 +1,5 @@
 from dotenv import dotenv_values
+import os
 
 env = dotenv_values()
 
@@ -8,6 +9,9 @@ passw = env.get('passRuk', None)
 keyWebhookBX24 = env.get('keyWebhookBX24', None)
 prefix_bx24 = env.get('prefix_bx24', None)
 userId_bx24 = env.get('userId_bx24', None)
+
+script_dir = os.path.dirname(os.path.abspath(__file__))
+temp_json_file = os.path.join(script_dir, 'temp', 'temp_leads.json')
 
 if not apiKey or not username or not passw or not keyWebhookBX24 or not prefix_bx24 or not userId_bx24:
     raise SystemExit("Не все параметры заполнены в .env")

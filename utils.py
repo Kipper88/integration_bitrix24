@@ -1,5 +1,6 @@
 from aiohttp import ClientSession
 from cfg import *
+import json
 
 async def get_data_from_bx24(id_):
     async with ClientSession() as sess:
@@ -108,3 +109,63 @@ async def get_inn_bx24(id_):
         data = await res.json()
         
         return data.get("result", {}).get("UF_CRM_1749452196788", "")
+    
+
+class CheckUpdateStatus:
+    def __init__(self): 
+        pass
+
+    async def getJson(self):
+        with open(temp_json_file, 'r') as f:
+            contents = f.read()
+            return json.loads(contents)
+        
+    async def checkStatusBx24(self, id_, status):
+        res = await self.checkStatus(id_, status)
+        if status in ["UC_E0YGIO", "NEW",]:
+            return True
+        # if res:
+        #     if res == "update" or status in ["UC_E0YGIO"]:
+        #         await self.updateId(id_, status)
+        #         return True
+            
+        #     if res == "add":
+        #         await self.addId(id_, status)
+        #         return True
+        #     if res == "delete":
+        #         await self.deleteId(id_, status)
+        #         return False
+        # else:
+        #     return False
+        
+    async def checkStatus(self, id_, status):        
+        j = await self.getJson()
+
+        if id_ in j:
+            if status == "LOSE":
+                return "delete"
+            if j[id_] == status:
+                return False
+            if j[id_] != status:
+                return "update"
+        else:
+            return "add"
+
+    async def addId(self, id_, status: str):
+        j = await self.getJson()
+        
+        j[id_] = status
+
+        async with aiofiles.open(temp_json_file, 'w') as f:
+            await f.write(json.dumps(j, indent=4))
+
+    async def updateId(self, id_, status: str):
+        await self.addId(id_, status)
+
+    async def deleteId(self, id_):
+        j = await self.getJson()
+
+        del j[id_]
+
+        async with aiofiles.open(temp_json_file, 'w') as f:
+            await f.write(json.dumps(j, indent=4))

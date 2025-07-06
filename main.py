@@ -1,11 +1,9 @@
 import logging
 from fastapi import FastAPI, Request, Response
 from utils import *
-from cfg import directions, f12796_dict, f12798_dict, f12799_dict, f12802_dict
+from cfg import *
 
-import sys
-
-handler = logging.StreamHandler(sys.stdout)
+handler = logging.FileHandler('webhook.log', encoding='utf-8')  # Логи будут записываться в файл webhook.log
 formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
 handler.setFormatter(formatter)
 
@@ -35,8 +33,8 @@ async def receive_webhook(request: Request):
 
         checkStatus = CheckUpdateStatus()
         status_bx24 = data_bx24.get("STAGE_ID", "")
-        if not checkStatus.checkStatusBx24(id_deal_bx24, status_bx24):
-            logger.info(f"Статус не совпадает с необходимыми")
+        if not await checkStatus.checkStatusBx24(id_deal_bx24, status_bx24):
+            logger.info(f"Статус не совпадает с необходимым или ID уже передавался")
             return Response(status_code=200)
         
         ###########################################################
@@ -93,7 +91,7 @@ async def receive_webhook(request: Request):
         f12836 = data_bx24.get("UF_CRM_1751617532", "")
 
         the_customer_company = await get_company_from_rukovoditel(inn)
-        logger.info(f"Отправка данных в Руково...")
+        logger.info(f"Отправка данных в Руководитель...")
 
         await post_data_to_ruk(route, direction, inn, btg_manager_kam, comment_on_the_deal, the_customer_company,
             f12795, f12796, f12797, f12798, f12799, f12800, f12801, f12802, f12803, f12804, f12805, f12806, f12807, f12808,

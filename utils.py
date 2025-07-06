@@ -130,27 +130,24 @@ class CheckUpdateStatus:
         pass
 
     async def getJson(self):
-        with open(temp_json_file, 'r') as f:
+        with open(temp_json_file, 'r', encoding='utf-8') as f:
             contents = f.read()
             return json.loads(contents)
         
     async def checkStatusBx24(self, id_, status):
-        res = await self.checkStatus(id_, status)
-        if status in ["UC_E0YGIO", "NEW",]:
+        if status in ["UC_E0YGIO"]:
+            if await self.checkExist(id_):
+                return True
+        
+    async def checkExist(self, id_):
+        j = await self.getJson()
+        
+        if id_ in j:
+            return False
+        else:
+            await self.addId(id_)
             return True
-        # if res:
-        #     if res == "update" or status in ["UC_E0YGIO"]:
-        #         await self.updateId(id_, status)
-        #         return True
-            
-        #     if res == "add":
-        #         await self.addId(id_, status)
-        #         return True
-        #     if res == "delete":
-        #         await self.deleteId(id_, status)
-        #         return False
-        # else:
-        #     return False
+        
         
     async def checkStatus(self, id_, status):        
         j = await self.getJson()
@@ -165,13 +162,13 @@ class CheckUpdateStatus:
         else:
             return "add"
 
-    async def addId(self, id_, status: str):
+    async def addId(self, id_):
         j = await self.getJson()
         
-        j[id_] = status
+        j[id_] = '1'
 
-        async with aiofiles.open(temp_json_file, 'w') as f:
-            await f.write(json.dumps(j, indent=4))
+        with open(temp_json_file, 'w', encoding='utf-8') as f:
+            f.write(json.dumps(j, indent=4))
 
     async def updateId(self, id_, status: str):
         await self.addId(id_, status)
@@ -181,5 +178,5 @@ class CheckUpdateStatus:
 
         del j[id_]
 
-        async with aiofiles.open(temp_json_file, 'w') as f:
+        with open(temp_json_file, 'w') as f:
             await f.write(json.dumps(j, indent=4))

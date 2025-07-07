@@ -35,7 +35,8 @@ async def get_resp_without_filter(entity_id, select_fields, filters=None):
 
 async def post_data_to_ruk(route, direction, inn, btg_manager_kam, comment_on_the_deal, the_customer_company,\
     f12795, f12796, f12797, f12798, f12799, f12800, f12801, f12802, f12803, f12804, f12805, f12806, f12807, f12808, f12809, f12810, f12811, f12812, f12813, f12814, f12815, f12816, f12817,\
-    f12837, f12838, f12839, f12840, f12841, f12842, f12844, f12845, f12846, f12847, f12835, f12836):
+    f12837, f12838, f12839, f12840, f12841, f12842, f12844, f12845, f12846, f12847, f12835, f12836,\
+    f12848, f12850):
     params = {
         'key': apiKey,
         'username': username,
@@ -86,7 +87,10 @@ async def post_data_to_ruk(route, direction, inn, btg_manager_kam, comment_on_th
             "field_12846": f12846,
             "field_12847": f12847,
             "field_12835": f12835,
-            "field_12836": f12836
+            "field_12836": f12836,
+
+            "field_12848": f12848,
+            "field_12850": f12850,
         }      
     }
     

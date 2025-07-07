@@ -90,13 +90,17 @@ async def receive_webhook(request: Request):
         f12835 = data_bx24.get("UF_CRM_1751617518", "")
         f12836 = data_bx24.get("UF_CRM_1751617532", "")
 
+        f12848 = data_bx24.get("UF_CRM_1751876826", "")
+        f12850 = f"https://btg24.bitrix24.ru/crm/deal/details/{id_deal_bx24}/"
+
         the_customer_company = await get_company_from_rukovoditel(inn)
         logger.info(f"Отправка данных в Руководитель...")
 
         await post_data_to_ruk(route, direction, inn, btg_manager_kam, comment_on_the_deal, the_customer_company,
             f12795, f12796, f12797, f12798, f12799, f12800, f12801, f12802, f12803, f12804, f12805, f12806, f12807, f12808,
             f12809, f12810, f12811, f12812, f12813, f12814, f12815, f12816, f12817,
-            f12837, f12838, f12839, f12840, f12841, f12842, f12844, f12845, f12846, f12847, f12835, f12836)
+            f12837, f12838, f12839, f12840, f12841, f12842, f12844, f12845, f12846, f12847, f12835, f12836,
+            f12848, f12850)
 
         logger.info(f"Данные успешно отправлены.")
         return Response(status_code=200)

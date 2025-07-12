@@ -184,3 +184,11 @@ class CheckUpdateStatus:
 
         with open(temp_json_file, 'w') as f:
             await f.write(json.dumps(j, indent=4))
+            
+            
+def ensure_temp_file():
+    os.makedirs('temp', exist_ok=True)
+    file_path = os.path.join('temp', 'temp_leads.json')
+    if not os.path.exists(file_path):
+        with open(file_path, 'w', encoding='utf-8') as f:
+            json.dump({}, f, ensure_ascii=False, indent=4)

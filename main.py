@@ -12,6 +12,8 @@ logger.setLevel(logging.INFO)
 logger.addHandler(handler)
 logger.propagate = False
 
+ensure_temp_file()
+
 app = FastAPI()
 
 @app.post("/api/deal")

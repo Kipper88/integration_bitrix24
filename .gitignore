@@ -92,4 +92,4 @@ Desktop.ini
 *.env
 .env.*
 
-temp/*
+/temp/

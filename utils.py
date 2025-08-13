@@ -1,15 +1,22 @@
-from aiohttp import ClientSession
+from aiohttp import ClientSession, ClientTimeout
 from cfg import *
 import json
 
-async def get_data_from_bx24(id_):
+async def get_data_from_bx24_deal(id_):
     async with ClientSession() as sess:
         res = await sess.post(url=f"https://btg24.bitrix24.ru/rest/{userId_bx24}/{keyWebhookBX24}/crm.deal.get?ID={id_}")
         data = await res.json()
         
     return data.get("result", {})
+
+async def get_data_from_bx24_bid(id_):
+    async with ClientSession() as sess:
+        res = await sess.post(url=f"https://btg24.bitrix24.ru/rest/{userId_bx24}/{keyWebhookBX24}/crm.quote.get?id={id_}")
+        data = await res.json()
+        
+    return data.get("result", {})
     
-async def get_resp_without_filter(entity_id, select_fields, filters=None):
+async def get_resp_without_filter(entity_id, select_fields, filters=None, timeout=None):
     params = {
             'key': apiKey,
             'username': username,
@@ -20,9 +27,9 @@ async def get_resp_without_filter(entity_id, select_fields, filters=None):
     }
     
     if filters:
-        params['filters'] = filters
+       params['filters'] = filters
     
-    async with ClientSession() as sess:
+    async with ClientSession(timeout=ClientTimeout(timeout)) as sess:
         resp = await sess.post(
             url="https://btg-sped.ru/crm/api/rest.php",
             json=params,
@@ -97,6 +104,85 @@ async def post_data_to_ruk(route, direction, inn, btg_manager_kam, comment_on_th
     async with ClientSession() as sess:
         res = await sess.post(url="https://btg-sped.ru/crm/api/rest.php", ssl=False, json=params)
         
+        if res.status == 200:
+            data = await res.json(content_type='text/html')
+            data = data['data']
+            
+            return data.get('id')
+        
+async def post_data_tech_naimenovanie_to_ruk(f12974, f12973, f12975, f12972, parent_item_id_bid):
+    params = {
+        'key': apiKey,
+        'username': username,
+        'password': passw,
+        'action': 'insert',
+        'entity_id': '373', 
+        'items': {
+            'field_12974': f12974,
+            'field_12973': f12973,
+            'field_12975': f12975,
+            'field_12972': f12972,
+            'parent_item_id': parent_item_id_bid
+            
+        }
+    }
+    
+    async with ClientSession() as sess:
+        res = await sess.post(url="https://btg-sped.ru/crm/api/rest.php", ssl=False, json=params)
+        
+        if res.status == 200:
+            data = await res.json(content_type='text/html')
+            data = data['data']
+            
+            return data.get('id')
+        
+async def post_data_kom_predlojenie_to_ruk(id):
+    params = {
+        'key': apiKey,
+        'username': username,
+        'password': passw,
+        'action': 'insert',
+        'entity_id': '372', 
+        'items': {
+            'field_12971': "",
+            'field_12969': "5486",
+            'parent_item_id': id
+            
+        }
+    }
+    async with ClientSession() as sess:
+        res = await sess.post(url="https://btg-sped.ru/crm/api/rest.php", ssl=False, json=params)
+        print(await res.text())
+        
+        if res.status == 200:
+            data = await res.json(content_type='text/html')
+            data = data['data']
+            
+            return data.get('id')
+        
+async def post_id_deal_to_bx24(id_deal_bx24, id_ruk):
+    async with ClientSession() as sess:
+        params = {
+            "ID": id_deal_bx24,
+            "FIELDS": {
+                "UF_CRM_1753865222": id_ruk
+            }
+        }
+        
+        await sess.post(url=f"https://btg24.bitrix24.ru/rest/{userId_bx24}/{keyWebhookBX24}/crm.deal.update", json=params)
+        
+        
+async def post_id_bid_to_bx24(id):
+    async with ClientSession() as sess:
+        params = {
+            "ID": id,
+            "FIELDS": {
+                "UF_CRM_1753865270": id
+            }
+        }
+        await sess.post(url=f"https://btg24.bitrix24.ru/rest/{userId_bx24}/{keyWebhookBX24}/crm.quote.update", params=params) 
+        
+        
 async def get_worker_from_bx24(id_):
     async with ClientSession() as sess:
         res = await sess.post(url=f"https://btg24.bitrix24.ru/rest/{userId_bx24}/{keyWebhookBX24}/im.user.get.json?ID={id_}")
@@ -117,9 +203,11 @@ async def get_company_from_rukovoditel(inn):
     return data[0].get('id')
 
 async def get_company_from_rukovoditel_btg_company(inn):
-    data = await get_resp_without_filter("66", "880", filters = {"880": inn})
-
-    return data[0].get('id')
+    data = await get_resp_without_filter("66", "880", filters = {"880": inn}, timeout=15)
+    try:
+        return data[0].get('id')
+    except:
+        return "391"
     
 async def get_inn_bx24(id_):
     async with ClientSession() as sess:

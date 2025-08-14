@@ -8,7 +8,7 @@ import traceback
 
 handler = RotatingFileHandler(
     'webhook.log',
-    maxBytes=5 * 1024 * 1024,  # 5 МБ
+    maxBytes = 1 * 1024 * 1024,  # 5 МБ
     backupCount=3,             # храним до 3 старых файлов
     encoding='utf-8'
 )
@@ -109,15 +109,17 @@ async def deal(data):
         the_customer_company = await get_company_from_rukovoditel(inn)
         logger.info(f"Отправка данных в Руководитель...")
 
-        id_ruk_deal_resp = await post_data_to_ruk(route, direction, inn, btg_manager_kam, comment_on_the_deal, the_customer_company,
+        id_deal_ruk = await post_data_to_ruk(route, direction, inn, btg_manager_kam, comment_on_the_deal, the_customer_company,
             f12795, f12796, f12797, f12798, f12799, f12800, f12801, f12802, f12803, f12804, f12805, f12806, f12807, f12808,
             f12809, f12810, f12811, f12812, f12813, f12814, f12815, f12816, f12817,
             f12837, f12838, f12839, f12840, f12841, f12842, f12844, f12845, f12846, f12847, f12835, f12836,
             f12848, f12850)
         
-        if id_ruk_deal_resp:
-            ids_activity_bids.append(id_deal_bx24)
-            await post_id_deal_to_bx24(id_deal_bx24, id_ruk_deal_resp)
+        id_bid_bx24 = data_bx24.get("UF_CRM_1755126562", "")
+        if id_bid_bx24 != "":
+            await bid(id_bid_bx24, id_deal_ruk)
+        
+        
 
         logger.info(f"Данные успешно отправлены.")
         return Response(status_code=200)
@@ -137,10 +139,6 @@ async def receive_webhook(request: Request):
         id = data.get("data[FIELDS][ID]", "")
 
         if event == "ONCRMDEALUPDATE":
-            if id in ids_activity_deals:
-                ids_activity_deals.remove(id)
-                return
-            
             await deal(data)
             
         # if event == "ONCRMQUOTEADD":
@@ -154,18 +152,15 @@ async def receive_webhook(request: Request):
         logger.error(f"Произошла ошибка в обработчике вебхука: {str(err)}")        
         
     
-async def bid(data):
+async def bid(id_bid_bx24, id_deal_ruk):
     try:
-        id_bid_bx24 = data.get("data[FIELDS][ID]", "")
-        logger.info(f"ID сделки: {id_bid_bx24}")
+        logger.info(f"ID предложения: {id_bid_bx24}")
         
         data_bid_bx24 = await get_data_from_bx24_bid(id_bid_bx24)
         logger.info(f"Получены данные предложения из BX24")
-        
-        # if data_bid_bx24.get("STATUS_ID", "") == ????
-        
-        id_deal_bx24 = await get_data_from_bx24_deal(data_bid_bx24.get("DEAL_ID"))
-        id_deal_bx24 = id_deal_bx24.get("UF_CRM_1753865222", "")
+                
+        # id_deal_bx24 = await get_data_from_bx24_deal(data_bid_bx24.get("DEAL_ID"))
+        # id_deal_bx24 = id_deal_bx24.get("UF_CRM_1753865222", "")
         
         f12974 = f12974_dict.get(data_bid_bx24.get("UF_CRM_1751464237", ""), "")
         f12973 = f12973_dict.get(data_bid_bx24.get("UF_CRM_QUOTE_1751530155", ""), "")
@@ -174,7 +169,7 @@ async def bid(data):
         
         f12972 = data_bid_bx24.get("OPPORTUNITY", "")
         
-        id_kom_predl_ruk = await post_data_kom_predlojenie_to_ruk(id_deal_bx24)
+        id_kom_predl_ruk = await post_data_kom_predlojenie_to_ruk(id_deal_ruk)
         id_bid_ruk = await post_data_tech_naimenovanie_to_ruk(f12974, f12973, f12975, f12972, id_kom_predl_ruk)
         
         #await post_id_bid_to_bx24(id_bid_ruk)
@@ -186,4 +181,4 @@ async def bid(data):
         
         
     except Exception as err:
-        traceback.print_exc()
+        logger.error(f"Произошла ошибка при обработке КП: {str(err)}")

@@ -152,7 +152,6 @@ async def post_data_kom_predlojenie_to_ruk(id):
     }
     async with ClientSession() as sess:
         res = await sess.post(url="https://btg-sped.ru/crm/api/rest.php", ssl=False, json=params)
-        print(await res.text())
         
         if res.status == 200:
             data = await res.json(content_type='text/html')

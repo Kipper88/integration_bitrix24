@@ -151,8 +151,7 @@ async def receive_webhook(request: Request):
         #     await bid(data)
         
     except Exception as err:
-        print(err)
-        
+        logger.error(f"Произошла ошибка в обработчике вебхука: {str(err)}")        
         
     
 async def bid(data):
@@ -171,11 +170,6 @@ async def bid(data):
         f12974 = f12974_dict.get(data_bid_bx24.get("UF_CRM_1751464237", ""), "")
         f12973 = f12973_dict.get(data_bid_bx24.get("UF_CRM_QUOTE_1751530155", ""), "")
         
-        print(data_bid_bx24.get("UF_CRM_1751464237", ""))
-        print(data_bid_bx24.get("UF_CRM_QUOTE_1751530155", ""))
-        
-        print(f12974, type(f12974))
-        print(f12973, type(f12973))
         f12975 = await get_company_from_rukovoditel_btg_company(data_bid_bx24.get("UF_CRM_686233DDCE5B7", ""))
         
         f12972 = data_bid_bx24.get("OPPORTUNITY", "")

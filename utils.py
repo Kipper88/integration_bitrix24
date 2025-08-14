@@ -51,12 +51,12 @@ async def post_data_to_ruk(route, direction, inn, btg_manager_kam, comment_on_th
         'action': 'insert',
         'entity_id': '369', 
         'items': {
-            'field_12776': int(route),
-            'field_12775': int(direction),
+            'field_12776': route,
+            'field_12775': direction,
             'field_12778': inn,
-            'field_12779': int(btg_manager_kam),
+            'field_12779': btg_manager_kam,
             'field_12780': comment_on_the_deal,
-            'field_12782': (the_customer_company),
+            'field_12782': the_customer_company,
             #'field_559': '318',
             
             "field_12795": f12795,

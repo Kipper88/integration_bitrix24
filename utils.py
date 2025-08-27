@@ -1,21 +1,17 @@
 from aiohttp import ClientSession, ClientTimeout
 from cfg import *
 import json
+import logging
 
-async def get_data_from_bx24_deal(id_):
+logger = logging.getLogger("webhook")
+
+async def get_data_from_bx24(action):
     async with ClientSession() as sess:
-        res = await sess.post(url=f"https://btg24.bitrix24.ru/rest/{userId_bx24}/{keyWebhookBX24}/crm.deal.get?ID={id_}")
+        res = await sess.post(url=f"https://btg24.bitrix24.ru/rest/{userId_bx24}/{keyWebhookBX24}/{action}")
         data = await res.json()
         
     return data.get("result", {})
-
-async def get_data_from_bx24_bid(id_):
-    async with ClientSession() as sess:
-        res = await sess.post(url=f"https://btg24.bitrix24.ru/rest/{userId_bx24}/{keyWebhookBX24}/crm.quote.get?id={id_}")
-        data = await res.json()
         
-    return data.get("result", {})
-    
 async def get_resp_without_filter(entity_id, select_fields, filters=None, timeout=None):
     params = {
             'key': apiKey,
@@ -40,6 +36,25 @@ async def get_resp_without_filter(entity_id, select_fields, filters=None, timeou
         
         return data
 
+async def post_data_to_ruk1(entity_id, items):
+    params = {
+        'key': apiKey,
+        'username': username,
+        'password': passw,
+        'action': 'insert',
+        'entity_id': entity_id, 
+        'items': items
+    }
+    
+    async with ClientSession() as sess:
+        res = await sess.post(url="https://btg-sped.ru/crm/api/rest.php", ssl=False, json=params)
+        
+        if res.status == 200:
+            data = await res.json(content_type='text/html')
+            data = data['data']
+            
+            return data.get('id')
+    
 async def post_data_to_ruk(route, direction, inn, btg_manager_kam, comment_on_the_deal, the_customer_company,\
     f12795, f12796, f12797, f12798, f12799, f12800, f12801, f12802, f12803, f12804, f12805, f12806, f12807, f12808, f12809, f12810, f12811, f12812, f12813, f12814, f12815, f12816, f12817,\
     f12837, f12838, f12839, f12840, f12841, f12842, f12844, f12845, f12846, f12847, f12835, f12836,\
@@ -169,8 +184,7 @@ async def post_id_deal_to_bx24(id_deal_bx24, id_ruk):
         }
         
         await sess.post(url=f"https://btg24.bitrix24.ru/rest/{userId_bx24}/{keyWebhookBX24}/crm.deal.update", json=params)
-        
-        
+             
 async def post_id_bid_to_bx24(id):
     async with ClientSession() as sess:
         params = {
@@ -180,8 +194,7 @@ async def post_id_bid_to_bx24(id):
             }
         }
         await sess.post(url=f"https://btg24.bitrix24.ru/rest/{userId_bx24}/{keyWebhookBX24}/crm.quote.update", params=params) 
-        
-        
+              
 async def get_worker_from_bx24(id_):
     async with ClientSession() as sess:
         res = await sess.post(url=f"https://btg24.bitrix24.ru/rest/{userId_bx24}/{keyWebhookBX24}/im.user.get.json?ID={id_}")
@@ -274,8 +287,10 @@ class CheckUpdateStatus:
             
             
 def ensure_temp_file():
-    os.makedirs('temp', exist_ok=True)
-    file_path = os.path.join('temp', 'temp_leads.json')
-    if not os.path.exists(file_path):
-        with open(file_path, 'w', encoding='utf-8') as f:
+    logger.info("Инициализация кэша...")
+    
+    if not os.path.exists(temp_json_file):
+        with open(temp_json_file, 'w', encoding='utf-8') as f:
             json.dump({}, f, ensure_ascii=False, indent=4)
+            
+    logger.info("Инициализация кэша завершена")

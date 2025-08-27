@@ -93,3 +93,4 @@ Desktop.ini
 .env.*
 
 /temp/
+test.py

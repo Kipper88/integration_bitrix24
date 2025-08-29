@@ -54,7 +54,7 @@ async def company(data):
     field_3676 = data_company_bx24.get("UF_CRM_1752137143", "")
     field_12283 = data_company_bx24.get("UF_CRM_1751888381", "")
     
-    field_3676 = f3676_dict.get(data_company_bx24.get("", ""), "")
+    field_3676 = f3676_dict.get(data_company_bx24.get("UF_CRM_1752137143", ""), "")
     
     items = {f"{k}": f"{v}" for k, v in locals().items() if k.startswith("field_")}
     

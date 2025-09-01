@@ -11,7 +11,7 @@ prefix_bx24 = env.get('prefix_bx24', None)
 userId_bx24 = env.get('userId_bx24', None)
 
 script_dir = os.path.dirname(os.path.abspath(__file__))
-temp_json_file = os.path.join(script_dir, 'temp/latest_bx24', 'temp_leads.json')
+temp_json_file = os.path.join(script_dir, 'temp/latest_bx24/temp_leads.json')
 
 if not apiKey or not username or not passw or not keyWebhookBX24 or not prefix_bx24 or not userId_bx24:
     raise SystemExit("Не все параметры заполнены в .env")

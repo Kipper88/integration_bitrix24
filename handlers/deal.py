@@ -5,6 +5,7 @@ from .bid import bid
 from decorators.except_decorators import async_exception_logger
 
 import logging
+import asyncio
 
 logger = logging.getLogger("webhook")
 
@@ -96,6 +97,10 @@ async def deal(data):
         f12848, f12850)
     
     id_bid_bx24 = data_bx24.get("UF_CRM_1755126562", "")
+    
+    # для ожидания всех операций автоматизации на стороне портала
+    await asyncio.sleep(60)
+    
     if id_bid_bx24 != "":
         await bid(id_bid_bx24, id_deal_ruk)
     

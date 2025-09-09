@@ -11,7 +11,33 @@ async def get_data_from_bx24(action):
         data = await res.json()
         
     return data.get("result", {})
+
+async def post_data_to_bx24(action, data):
+    params = {
+        "fields": data,
+        "params": {"REGISTER_SONET_EVENT": "Y"}
+    }
+    async with ClientSession() as sess:
+        res = await sess.post(url=f"https://btg24.bitrix24.ru/rest/{userId_bx24}/{keyWebhookBX24}/{action}", json=params)
+        data = await res.json()
         
+        
+    return data.get("result", {})
+
+async def post_data_site_company_to_lid_bx24(data: dict):
+    TITLE = f"{data.get('UF_CRM_1748858141430', '')}, {data.get('UF_CRM_1751286704', '')}, {data.get('COMPANY_TITLE', '')}"
+    data.update(TITLE)
+    
+    # исключение параметров, идущих в TITLE
+    data.pop("UF_CRM_1748858141430")
+    data.pop("UF_CRM_1751286704")
+    data.pop("COMPANY_TITLE")
+    
+
+    await post_data_to_bx24("crm.lead.add", data)
+    
+    
+    
 async def get_resp_without_filter(entity_id, select_fields, filters=None, timeout=None):
     params = {
             'key': apiKey,
@@ -194,7 +220,7 @@ async def post_id_bid_to_bx24(id):
             }
         }
         await sess.post(url=f"https://btg24.bitrix24.ru/rest/{userId_bx24}/{keyWebhookBX24}/crm.quote.update", params=params) 
-              
+                 
 async def get_worker_from_bx24(id_):
     async with ClientSession() as sess:
         res = await sess.post(url=f"https://btg24.bitrix24.ru/rest/{userId_bx24}/{keyWebhookBX24}/im.user.get.json?ID={id_}")

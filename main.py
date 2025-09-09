@@ -6,6 +6,7 @@ from cfg import *
 
 from handlers.deal import deal
 from handlers.company import company
+from handlers.site_company import site_company
 
 handler = RotatingFileHandler(
     'temp/log/webhook.log',
@@ -45,6 +46,14 @@ async def receive_webhook(request: Request):
                 await company(data)
         
     except Exception as err:
-        logger.error(f"Произошла ошибка в обработчике вебхука: {str(err)}")        
+        logger.error(f"Произошла ошибка в обработчике вебхука: {str(err)}")       
+        
+@app.post("/api/site_company")
+async def webhook_site_company(request: Request): 
+    form = await request.form()
+    data = dict(form)
+    logger.info(f"Получены данные webhook siteBTG: {data}")
+    
+    await site_company(data)
         
 logger.info("Программа успешно запущена")

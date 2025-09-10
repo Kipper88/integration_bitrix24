@@ -26,7 +26,7 @@ async def post_data_to_bx24(action, data):
 
 async def post_data_site_company_to_lid_bx24(data: dict):
     TITLE = f"{data.get('UF_CRM_1748858141430', '')}, {data.get('UF_CRM_1751286704', '')}, {data.get('COMPANY_TITLE', '')}"
-    data.update(TITLE)
+    data["TITLE"] = TITLE
     
     # исключение параметров, идущих в TITLE
     data.pop("UF_CRM_1748858141430")

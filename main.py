@@ -50,8 +50,9 @@ async def receive_webhook(request: Request):
         
 @app.post("/api/site_company")
 async def webhook_site_company(request: Request): 
-    form = await request.form()
+    form = await request.json()
     data = dict(form)
+
     logger.info(f"Получены данные webhook siteBTG: {data}")
     
     await site_company(data)

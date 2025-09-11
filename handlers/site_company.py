@@ -9,14 +9,15 @@ logger = logging.getLogger("webhook")
 async def site_company(data):
     params = {
         #"UF_CRM_1748858141430": UF_CRM_1748858141430_dict.get(data.get("Вид транспортного средства", ""), ""),
-        "UF_CRM_1748858141430": data.get("Вид транспортного средства", ""),
+        "UF_CRM_1748858141430": UF_CRM_1748858141430_dict.get(data.get("Вид транспортного средства", "")),
         "UF_CRM_1751286410": UF_CRM_1751286410_dict.get(data.get("Вид загрузки", ""), ""),
         "UF_CRM_1756973470428": data.get("Место загрузки", ""),
         "UF_CRM_1756973517577": data.get("Место выгрузки", ""),
-        #"UF_CRM_1756973590960": data.get("Наименование товара / груза / Вес и тд.", ""),
+        "UF_CRM_1756973590960": data.get("Наименование товара / груза / Вес и тд.", ""),
         "UF_CRM_1751286704": data.get("No Label field_15d234f", ""),
         "NAME": data.get("No Label field_945417d", ""),
-        "COMPANY_TITLE": ", ".join(
+        "COMPANY_TITLE": data.get("No Label field_4d9601c", ""),
+        "TITLE": ", ".join(
             filter(
                 None,
                 [

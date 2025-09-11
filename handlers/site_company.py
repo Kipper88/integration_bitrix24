@@ -17,6 +17,7 @@ async def site_company(data):
         "UF_CRM_1751286704": data.get("No Label field_15d234f", ""),
         "NAME": data.get("No Label field_945417d", ""),
         "COMPANY_TITLE": data.get("No Label field_4d9601c", ""),
+        "SOURCE_ID": "WEB",
         "TITLE": ", ".join(
             filter(
                 None,

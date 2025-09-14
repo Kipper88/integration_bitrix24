@@ -142,21 +142,15 @@ async def post_data_to_ruk(route, direction, inn, btg_manager_kam, comment_on_th
             
             return data.get('id')
         
-async def post_data_tech_naimenovanie_to_ruk(f12974, f12973, f12975, f12972, parent_item_id_bid):
+async def post_data_tech_naimenovanie_to_ruk(items, parent_item_id_bid):
     params = {
         'key': apiKey,
         'username': username,
         'password': passw,
-        'action': 'insert',
-        'entity_id': '373', 
-        'items': {
-            'field_12974': f12974,
-            'field_12973': f12973,
-            'field_12975': f12975,
-            'field_12972': f12972,
-            'parent_item_id': parent_item_id_bid
-            
-        }
+        'action': 'update',
+        'entity_id': '369', 
+        'data': items,
+        'update_by_id': {'id': parent_item_id_bid}
     }
     
     async with ClientSession() as sess:

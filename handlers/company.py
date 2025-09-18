@@ -58,6 +58,9 @@ async def company(data):
     
     field_5979 = "1"
     
+    field_1046 = "1014"
+    field_5979 = "1"
+    
     items = {f"{k}": f"{v}" for k, v in locals().items() if k.startswith("field_")}
     
     await post_data_to_ruk1("68", items)

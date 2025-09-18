@@ -75,7 +75,7 @@ async def post_data_to_ruk1(entity_id, items):
 async def post_data_to_ruk(route, direction, inn, btg_manager_kam, comment_on_the_deal, the_customer_company,\
     f12795, f12796, f12797, f12798, f12799, f12800, f12801, f12802, f12803, f12804, f12805, f12806, f12807, f12808, f12809, f12810, f12811, f12812, f12813, f12814, f12815, f12816, f12817,\
     f12837, f12838, f12839, f12840, f12841, f12842, f12844, f12845, f12846, f12847, f12835, f12836,\
-    f12848, f12850):
+    f12848, f12850, f13139):
     params = {
         'key': apiKey,
         'username': username,
@@ -130,6 +130,7 @@ async def post_data_to_ruk(route, direction, inn, btg_manager_kam, comment_on_th
 
             "field_12848": f12848,
             "field_12850": f12850,
+            "field_13139": f13139
         }      
     }
     
@@ -142,7 +143,7 @@ async def post_data_to_ruk(route, direction, inn, btg_manager_kam, comment_on_th
             
             return data.get('id')
         
-async def post_data_tech_naimenovanie_to_ruk(items, parent_item_id_bid):
+async def post_data_kp_to_ruk(items, id_deal):
     params = {
         'key': apiKey,
         'username': username,
@@ -150,18 +151,19 @@ async def post_data_tech_naimenovanie_to_ruk(items, parent_item_id_bid):
         'action': 'update',
         'entity_id': '369', 
         'data': items,
-        'update_by_id': {'id': parent_item_id_bid}
+        'update_by_field': {'id': id_deal}
     }
     
     async with ClientSession() as sess:
         res = await sess.post(url="https://btg-sped.ru/crm/api/rest.php", ssl=False, json=params)
-        
+                
         if res.status == 200:
             data = await res.json(content_type='text/html')
             data = data['data']
             
             return data.get('id')
         
+
 async def post_data_kom_predlojenie_to_ruk(id):
     params = {
         'key': apiKey,
@@ -259,10 +261,7 @@ class CheckUpdateStatus:
         
         if id_ in j:
             return False
-        else:
-            await self.addId(id_)
-            return True
-        
+        return True
         
     async def checkStatus(self, id_, status):        
         j = await self.getJson()
@@ -280,10 +279,11 @@ class CheckUpdateStatus:
     async def addId(self, id_):
         j = await self.getJson()
         
-        j[id_] = '1'
+        if id_ not in j:
+            j.append(id_)
 
         with open(temp_json_file, 'w', encoding='utf-8') as f:
-            f.write(json.dumps(j, indent=4))
+            json.dump(j, f, indent=4, ensure_ascii=False)
 
     async def updateId(self, id_, status: str):
         await self.addId(id_, status)

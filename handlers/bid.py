@@ -24,4 +24,6 @@ async def bid(id_bid_bx24, id_deal_ruk):
     
     items = {f"{k}": f"{v}" for k, v in locals().items() if k.startswith("field_")}
     
-    await post_data_tech_naimenovanie_to_ruk(items, id_deal_ruk)
+    logger.info("Отправка предложения в руководитель...")
+    id = await post_data_kp_to_ruk(items, id_deal_ruk)
+    logger.info("Данные предложения успешно отправлены")

@@ -56,5 +56,5 @@ async def webhook_site_company(request: Request):
     logger.info(f"Получены данные webhook siteBTG: {data}")
     
     await site_company(data)
-        
+
 logger.info("Программа успешно запущена")

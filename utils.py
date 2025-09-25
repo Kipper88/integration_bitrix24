@@ -224,9 +224,13 @@ async def get_worker_from_rukovoditel(name_bx24):
         
 async def get_company_from_rukovoditel(inn):
     data = await get_resp_without_filter("68", "1004", filters = {"1004": inn})
-
-    return data[0].get('id')
-
+    
+    data2 = await get_resp_without_filter("68", "2650", filters = {"2650": inn})
+    
+    return (data[0].get("id") if data else None) \
+    or (data2[0].get("id") if data2 else None) \
+    or "0123456789"
+        
 async def get_company_from_rukovoditel_btg_company(inn):
     data = await get_resp_without_filter("66", "880", filters = {"880": inn}, timeout=15)
     try:

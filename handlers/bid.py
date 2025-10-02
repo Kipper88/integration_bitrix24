@@ -20,10 +20,31 @@ async def bid(id_bid_bx24, id_deal_ruk):
     
     field_13137 = data_bid_bx24.get("OPPORTUNITY", "")
     
-    #id_kom_predl_ruk = await post_data_kom_predlojenie_to_ruk(id_deal_ruk)
+    #######################################################
+    #######################################################
+    # валюты. Строка вида "100|EUR"
+    field_13254 = ""
+    field_13255 = ""
+
+    value = data_bid_bx24.get("UF_CRM_QUOTE_1752152869", "")
+
+    try:
+        parts = str(value).split("|")
+        field_13254 = parts[0].strip() if len(parts) > 0 else ""
+        field_13255 = parts[1].strip() if len(parts) > 1 else ""
+    except Exception:
+        # В случае любой ошибки оставляем пустые строки
+        field_13254 = ""
+        field_13255 = ""
+
+    #######################################################
+    #######################################################
     
+    field_13256 = f13256_dict.get(data_bid_bx24.get("UF_CRM_QUOTE_1752559708298", ""))
+    
+        
     items = {f"{k}": f"{v}" for k, v in locals().items() if k.startswith("field_")}
     
     logger.info("Отправка предложения в руководитель...")
     id = await post_data_kp_to_ruk(items, id_deal_ruk)
-    logger.info("Данные предложения успешно отправлены")
+    logger.info(f"Данные предложения успешно отправлены. id: {id}")

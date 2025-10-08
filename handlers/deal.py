@@ -89,6 +89,13 @@ async def deal(data):
     
     f13139 = f12810
     
+    f13256 = f13256_dict_deal.get(data_bx24.get("UF_CRM_1759480026", ""), "")
+    f13141 = data_bx24.get("UF_CRM_6867E2AC6BABD", "")
+    f13136 = f13136_dict_deal.get(data_bx24.get("UF_CRM_1751530362", ""), "")
+    f13138 = f13138_dict_deal.get(data_bx24.get("UF_CRM_1751530253", ""), "")
+    f13137 = data_bx24.get("UF_CRM_1753785762", "")
+    f13254 = data_bx24.get("UF_CRM_1753785779", "")
+    
     the_customer_company = await get_company_from_rukovoditel(inn)
     logger.info(f"Отправка данных в Руководитель...")
 
@@ -96,7 +103,8 @@ async def deal(data):
         f12795, f12796, f12797, f12798, f12799, f12800, f12801, f12802, f12803, f12804, f12805, f12806, f12807, f12808,
         f12809, f12810, f12811, f12812, f12813, f12814, f12815, f12816, f12817,
         f12837, f12838, f12839, f12840, f12841, f12842, f12844, f12845, f12846, f12847, f12835, f12836,
-        f12848, f12850, f13139)
+        f12848, f12850, f13139,
+        f13256, f13141, f13136, f13138, f13137, f13254)
     
     logger.info(f"Данные сделкиуспешно отправлены.")
     

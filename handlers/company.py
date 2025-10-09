@@ -63,4 +63,4 @@ async def company(data):
     
     items = {f"{k}": f"{v}" for k, v in locals().items() if k.startswith("field_")}
     
-    await post_data_to_ruk1("68", items)
+    await post_data_to_ruk("68", items)

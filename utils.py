@@ -53,7 +53,7 @@ async def get_resp_without_filter(entity_id, select_fields, filters=None, timeou
         
         return data
 
-async def post_data_to_ruk1(entity_id, items):
+async def post_data_to_ruk(entity_id, items):
     params = {
         'key': apiKey,
         'username': username,
@@ -61,85 +61,6 @@ async def post_data_to_ruk1(entity_id, items):
         'action': 'insert',
         'entity_id': entity_id, 
         'items': items
-    }
-    
-    async with ClientSession() as sess:
-        res = await sess.post(url="https://btg-sped.ru/crm/api/rest.php", ssl=False, json=params)
-        
-        if res.status == 200:
-            data = await res.json(content_type='text/html')
-            data = data['data']
-            
-            return data.get('id')
-    
-async def post_data_to_ruk(route, direction, inn, btg_manager_kam, comment_on_the_deal, the_customer_company,\
-    f12795, f12796, f12797, f12798, f12799, f12800, f12801, f12802, f12803, f12804, f12805, f12806, f12807, f12808, f12809, f12810, f12811, f12812, f12813, f12814, f12815, f12816, f12817,\
-    f12837, f12838, f12839, f12840, f12841, f12842, f12844, f12845, f12846, f12847, f12835, f12836,\
-    f12848, f12850, f13139,
-    f13256, f13141, f13136, f13138, f13137, f13254):
-    params = {
-        'key': apiKey,
-        'username': username,
-        'password': passw,
-        'action': 'insert',
-        'entity_id': '369', 
-        'items': {
-            'field_12776': route,
-            'field_12775': direction,
-            'field_12778': inn,
-            'field_12779': btg_manager_kam,
-            'field_12780': comment_on_the_deal,
-            'field_12782': the_customer_company,
-            #'field_559': '318',
-            
-            "field_12795": f12795,
-            "field_12796": f12796,
-            "field_12797": f12797,
-            "field_12798": f12798,
-            "field_12799": f12799,
-            "field_12800": f12800,
-            "field_12801": f12801,
-            "field_12802": f12802,
-            "field_12803": f12803,
-            "field_12804": f12804,
-            "field_12805": f12805,
-            "field_12806": f12806,
-            "field_12807": f12807,
-            "field_12808": f12808,
-            "field_12809": f12809,
-            "field_12810": f12810,
-            "field_12811": f12811,
-            "field_12812": f12812,
-            "field_12813": f12813,
-            "field_12814": f12814,
-            "field_12815": f12815,
-            "field_12816": f12816,
-            "field_12817": f12817,
-
-            "field_12837": f12837,
-            "field_12838": f12838,
-            "field_12839": f12839,
-            "field_12840": f12840,
-            "field_12841": f12841,
-            "field_12842": f12842,
-            "field_12844": f12844,
-            "field_12845": f12845,
-            "field_12846": f12846,
-            "field_12847": f12847,
-            "field_12835": f12835,
-            "field_12836": f12836,
-
-            "field_12848": f12848,
-            "field_12850": f12850,
-            "field_13139": f13139,
-            
-            "field_13256": f13256, 
-            "field_13141": f13141, 
-            "field_13136": f13136, 
-            "field_13138": f13138,
-            "field_13137": f13137,
-            "field_13254": f13254
-        }      
     }
     
     async with ClientSession() as sess:

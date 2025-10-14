@@ -1,6 +1,5 @@
 from utils import *
 from fastapi import Response
-from .bid import bid
 
 from decorators.except_decorators import async_exception_logger
 
@@ -48,7 +47,7 @@ async def deal(data):
     field_12782 = await get_company_from_rukovoditel(field_12778) # the customer company
 
     field_12795 = data_bx24.get("UF_CRM_683EA5EE8F634", "")
-    field_12796 = f12796_dict.get(str(data_bx24["UF_CRM_685000BC67768"][0]) if data_bx24["UF_CRM_685000BC67768"] else "")
+    field_12796 = f12796_dict.get(str(data_bx24["UF_CRM_685000BC67768"][0]) if data_bx24["UF_CRM_685000BC67768"] else "", "")
     field_12797 = data_bx24.get("UF_CRM_1750405403", "")
     field_12798 = f12798_dict.get(data_bx24.get("UF_CRM_1750750718"), "")
     field_12799 = f12799_dict.get(data_bx24.get("UF_CRM_1750751963"), "")
@@ -102,7 +101,7 @@ async def deal(data):
 
     id_deal_ruk = await post_data_to_ruk("369", items)
     
-    id_bid_bx24 = data_bx24.get("UF_CRM_1755126562", "")
+    # id_bid_bx24 = data_bx24.get("UF_CRM_1755126562", "")
     
     
     # id_deal_ruk = await post_data_to_ruk1(route, direction, inn, btg_manager_kam, comment_on_the_deal, the_customer_company,
@@ -112,14 +111,14 @@ async def deal(data):
     #     f12848, f12850, f13139,
     #     f13256, f13141, f13136, f13138, f13137, f13254)
     
-    logger.info(f"Данные сделки успешно отправлены. ID_RUK - {id_deal_ruk}, ID_BX = {id_bid_bx24}. deal, DEAL")
+    logger.info(f"Данные сделки успешно отправлены. ID_RUK - {id_deal_ruk}, ID_BX = {id_deal_bx24}. deal, DEAL")
     
     
     
-    if id_bid_bx24 != "":
-        await bid(id_bid_bx24, id_deal_ruk)
+    # if id_bid_bx24 != "":
+    #     await bid(id_bid_bx24, id_deal_ruk)
         
-    await checkStatus.addId(id_deal_bx24)
+    # await checkStatus.addId(id_deal_bx24)
     
     
 

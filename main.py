@@ -29,11 +29,7 @@ logger.propagate = False
 ensure_temp_file()
 
 app = FastAPI()
-    
-import asyncio
-asyncio.run(deal(''))
 
-exit()
 @app.post("/api")
 async def receive_webhook(request: Request):
     try:

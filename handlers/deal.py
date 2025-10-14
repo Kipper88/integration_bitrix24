@@ -88,12 +88,12 @@ async def deal(data):
 
     field_13139 = field_12810
 
-    field_13256 = f13256_dict_deal.get(data_bx24.get("UF_CRM_1759480026", ""), "")
-    field_13141 = data_bx24.get("UF_CRM_6867E2AC6BABD", "")
-    field_13136 = f13136_dict_deal.get(data_bx24.get("UF_CRM_1751530362", ""), "")
-    field_13138 = f13138_dict_deal.get(data_bx24.get("UF_CRM_1751530253", ""), "")
-    field_13137 = data_bx24.get("UF_CRM_1753785762", "")
-    field_13254 = data_bx24.get("UF_CRM_1753785779", "")
+    # field_13256 = f13256_dict_deal.get(data_bx24.get("UF_CRM_1759480026", ""), "")
+    # field_13141 = data_bx24.get("UF_CRM_6867E2AC6BABD", "")
+    # field_13136 = f13136_dict_deal.get(data_bx24.get("UF_CRM_1751530362", ""), "")
+    # field_13138 = f13138_dict_deal.get(data_bx24.get("UF_CRM_1751530253", ""), "")
+    # field_13137 = data_bx24.get("UF_CRM_1753785762", "")
+    # field_13254 = data_bx24.get("UF_CRM_1753785779", "")
         
     items = {f"{k}": f"{v}" for k, v in locals().items() if k.startswith("field_")}
     

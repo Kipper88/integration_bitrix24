@@ -60,7 +60,7 @@ async def deal(data):
     field_12806 = data_bx24.get("UF_CRM_1750755907", "")
     field_12807 = data_bx24.get("UF_CRM_1750755925", "")
     field_12808 = data_bx24.get("UF_CRM_1750755957", "")
-    field_12809 = await get_worker_from_rukovoditel(await get_worker_from_bx24(data_bx24.get("UF_CRM_1750756012", "")))
+    field_13300 = await get_worker_from_rukovoditel(await get_worker_from_bx24(data_bx24.get("UF_CRM_1750756012", "")))
     field_12810 = await get_company_from_rukovoditel_btg_company(await get_inn_bx24(data_bx24.get("UF_CRM_1750756090", "")))
     field_12811 = data_bx24.get("UF_CRM_1750756250", "")
     field_12812 = data_bx24.get("UF_CRM_1750756289", "")
@@ -88,12 +88,12 @@ async def deal(data):
 
     field_13139 = field_12810
 
-    # field_13256 = f13256_dict_deal.get(data_bx24.get("UF_CRM_1759480026", ""), "")
-    # field_13141 = data_bx24.get("UF_CRM_6867E2AC6BABD", "")
-    # field_13136 = f13136_dict_deal.get(data_bx24.get("UF_CRM_1751530362", ""), "")
-    # field_13138 = f13138_dict_deal.get(data_bx24.get("UF_CRM_1751530253", ""), "")
-    # field_13137 = data_bx24.get("UF_CRM_1753785762", "")
-    # field_13254 = data_bx24.get("UF_CRM_1753785779", "")
+    field_13256 = f13256_dict_deal.get(data_bx24.get("UF_CRM_1759480026", ""), "")
+    field_13141 = data_bx24.get("UF_CRM_6867E2AC6BABD", "")
+    field_13136 = f13136_dict_deal.get(data_bx24.get("UF_CRM_1751530362", ""), "")
+    field_13138 = f13138_dict_deal.get(data_bx24.get("UF_CRM_1751530253", ""), "")
+    field_13137 = data_bx24.get("UF_CRM_1753785762", "")
+    field_13254 = data_bx24.get("UF_CRM_1753785779", "")
         
     items = {f"{k}": f"{v}" for k, v in locals().items() if k.startswith("field_")}
     

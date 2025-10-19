@@ -110,7 +110,7 @@ async def deal(data):
     # if id_bid_bx24 != "":
     #     await bid(id_bid_bx24, id_deal_ruk)
         
-    # await checkStatus.addId(id_deal_bx24)
+    await checkStatus.addId(id_deal_bx24)
     
     
 

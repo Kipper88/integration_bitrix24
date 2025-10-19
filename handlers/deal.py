@@ -89,27 +89,19 @@ async def deal(data):
     field_13139 = field_12810
 
     field_13256 = f13256_dict_deal.get(data_bx24.get("UF_CRM_1759480026", ""), "")
-    field_13141 = data_bx24.get("UF_CRM_6867E2AC6BABD", "")
+    field_13141 = data_bx24.get("UF_CRM_1750752148", "")
     field_13136 = f13136_dict_deal.get(data_bx24.get("UF_CRM_1751530362", ""), "")
     field_13138 = f13138_dict_deal.get(data_bx24.get("UF_CRM_1751530253", ""), "")
     field_13137 = data_bx24.get("UF_CRM_1753785762", "")
     field_13254 = data_bx24.get("UF_CRM_1753785779", "")
+    
+    field_13255 = data_bx24.get("UF_CRM_1753785779", "")
         
     items = {f"{k}": f"{v}" for k, v in locals().items() if k.startswith("field_")}
     
     logger.info(f"Отправка данных в Руководитель...")
 
     id_deal_ruk = await post_data_to_ruk("369", items)
-    
-    # id_bid_bx24 = data_bx24.get("UF_CRM_1755126562", "")
-    
-    
-    # id_deal_ruk = await post_data_to_ruk1(route, direction, inn, btg_manager_kam, comment_on_the_deal, the_customer_company,
-    #     f12795, f12796, f12797, f12798, f12799, f12800, f12801, f12802, f12803, f12804, f12805, f12806, f12807, f12808,
-    #     f12809, f12810, f12811, f12812, f12813, f12814, f12815, f12816, f12817,
-    #     f12837, f12838, f12839, f12840, f12841, f12842, f12844, f12845, f12846, f12847, f12835, f12836,
-    #     f12848, f12850, f13139,
-    #     f13256, f13141, f13136, f13138, f13137, f13254)
     
     logger.info(f"Данные сделки успешно отправлены. ID_RUK - {id_deal_ruk}, ID_BX = {id_deal_bx24}. deal, DEAL")
     

@@ -31,7 +31,7 @@ async def bid(id_bid_bx24, id_deal_ruk):
     try:
         parts = str(value).split("|")
         field_13254 = parts[0].strip() if len(parts) > 0 else ""
-        field_13255 = parts[1].strip() if len(parts) > 1 else ""
+        field_13255 = f13255_dict.get(parts[1].strip(), "") if len(parts) > 1 else ""
     except Exception:
         # В случае любой ошибки оставляем пустые строки
         field_13254 = ""
@@ -41,6 +41,16 @@ async def bid(id_bid_bx24, id_deal_ruk):
     #######################################################
     
     field_13256 = f13256_dict.get(data_bid_bx24.get("UF_CRM_QUOTE_1752559708298", ""))
+    
+    field_13488 = data_bid_bx24.get("UF_CRM_1762430356", "")
+    field_12835 = data_bid_bx24.get("UF_CRM_1762430319", "")
+    field_12836 = data_bid_bx24.get("UF_CRM_1762430335", "")
+    field_13300 = data_bid_bx24.get("UF_CRM_1761640368", "")
+    field_13503 = await get_worker_from_rukovoditel(await get_worker_from_bx24(data_bid_bx24.get("UF_CRM_1751441910", "")))
+    
+    field_13513 = data_bid_bx24.get("CURRENCY_ID", "")
+    
+    
     
         
     items = {f"{k}": f"{v}" for k, v in locals().items() if k.startswith("field_")}

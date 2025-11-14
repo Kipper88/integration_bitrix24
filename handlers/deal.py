@@ -91,11 +91,15 @@ async def deal(data):
     field_13256 = f13256_dict_deal.get(data_bx24.get("UF_CRM_1759480026", ""), "")
     field_13141 = data_bx24.get("UF_CRM_1750752148", "")
     field_13136 = f13136_dict_deal.get(data_bx24.get("UF_CRM_1751530362", ""), "")
-    field_13138 = f13138_dict_deal.get(data_bx24.get("UF_CRM_1751530253", ""), "")
-    field_13137 = data_bx24.get("UF_CRM_1753785762", "")
-    field_13254 = data_bx24.get("UF_CRM_1753785779", "")
+    #field_13138 = f13138_dict_deal.get(data_bx24.get("UF_CRM_1751530253", ""), "")
+    #field_13137 = data_bx24.get("UF_CRM_1753785762", "")
+    #field_13254 = data_bx24.get("UF_CRM_1753785779", "")
     
-    field_13255 = data_bx24.get("UF_CRM_1753785779", "")
+    #field_13255 = data_bx24.get("UF_CRM_1753785779", "")
+    
+    #
+    
+    
         
     items = {f"{k}": f"{v}" for k, v in locals().items() if k.startswith("field_")}
     
@@ -104,11 +108,6 @@ async def deal(data):
     id_deal_ruk = await post_data_to_ruk("369", items)
     
     logger.info(f"Данные сделки успешно отправлены. ID_RUK - {id_deal_ruk}, ID_BX = {id_deal_bx24}. deal, DEAL")
-    
-    
-    
-    # if id_bid_bx24 != "":
-    #     await bid(id_bid_bx24, id_deal_ruk)
         
     await checkStatus.addId(id_deal_bx24)
     

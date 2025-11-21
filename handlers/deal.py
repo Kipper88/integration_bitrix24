@@ -58,7 +58,6 @@ async def deal(data):
     field_12804 = data_bx24.get("UF_CRM_1750755728", "")
     field_12805 = data_bx24.get("UF_CRM_1750755776", "")
     field_12806 = data_bx24.get("UF_CRM_1750755907", "")
-    field_12807 = data_bx24.get("UF_CRM_1750755925", "")
     field_12808 = data_bx24.get("UF_CRM_1750755957", "")
     field_13300 = await get_worker_from_rukovoditel(await get_worker_from_bx24(data_bx24.get("UF_CRM_1750756012", "")))
     field_12810 = await get_company_from_rukovoditel_btg_company(await get_inn_bx24(data_bx24.get("UF_CRM_1750756090", "")))
@@ -72,32 +71,40 @@ async def deal(data):
 
     field_12837 = data_bx24.get("UF_CRM_1751441910", "")
     field_12838 = data_bx24.get("UF_CRM_1751454278870", "")
-    field_12839 = data_bx24.get("UF_CRM_17516114495", "")
     field_12840 = f12840_dict.get(data_bx24.get("UF_CRM_1751607912514", ""), "") #список
-    field_12841 = f12841_dict.get(data_bx24.get("UF_CRM_1751608473477", ""), "") #список
-    field_12842 = f12842_dict.get(data_bx24.get("UF_CRM_1751608579368", ""), "") #список
     field_12844 = f12844_dict.get(data_bx24.get("UF_CRM_1751609624436", ""), "") #список
     field_12845 = f12845_dict.get(data_bx24.get("UF_CRM_1751610742904", ""), "") #список
     field_12846 = f12846_dict.get(data_bx24.get("UF_CRM_1751613009219", ""), "") #список 
     field_12847 = f12847_dict.get(data_bx24.get("UF_CRM_1751613073416", ""), "") #список 
-    field_12835 = data_bx24.get("UF_CRM_1751617518", "")
-    field_12836 = data_bx24.get("UF_CRM_1751617532", "")
 
     field_12848 = data_bx24.get("UF_CRM_1751876826", "")
     field_12850 = f"https://btg24.bitrix24.ru/crm/deal/details/{id_deal_bx24}/"
 
     field_13139 = field_12810
 
-    field_13256 = f13256_dict_deal.get(data_bx24.get("UF_CRM_1759480026", ""), "")
-    field_13141 = data_bx24.get("UF_CRM_1750752148", "")
+    
     field_13136 = f13136_dict_deal.get(data_bx24.get("UF_CRM_1751530362", ""), "")
-    #field_13138 = f13138_dict_deal.get(data_bx24.get("UF_CRM_1751530253", ""), "")
-    #field_13137 = data_bx24.get("UF_CRM_1753785762", "")
-    #field_13254 = data_bx24.get("UF_CRM_1753785779", "")
     
-    #field_13255 = data_bx24.get("UF_CRM_1753785779", "")
-    
+    field_13503 = data_bx24.get("UF_CRM_1751441910", "")
+    field_12839 = data_bx24.get("UF_CRM_1751614495", "")
+    field_12835 = data_bx24.get("UF_CRM_1762430319", "")
+    field_12836 = data_bx24.get("UF_CRM_1762430335", "")
+    field_12841 = f12841_dict.get(data_bx24.get("UF_CRM_1751608473477", ""), "")
+    field_12842 = f12842_dict.get(data_bx24.get("UF_CRM_1751608579368", ""), "")
     #
+    field_13137 = data_bx24.get("UF_CRM_1763441408", "")
+    field_13138 = f13138_dict.get(data_bx24.get("UF_CRM_1751530253", ""), "")
+    field_13513 = data_bx24.get("UF_CRM_1763441424", "")
+    field_13254 = data_bx24.get("UF_CRM_1763446014", "")
+    field_13256 = f13256_dict.get(data_bx24.get("UF_CRM_1759480026", ""), "")
+    field_13255 = data_bx24.get("UF_CRM_1763446027", "")
+    field_13541 = data_bx24.get("UF_CRM_1763459456", "")
+    field_13542 = f13542_dict.get(data_bx24.get("UF_CRM_1763459517", ""), "")
+    field_13549 = data_bx24.get("UF_CRM_1763534084", "")
+    field_13550 = data_bx24.get("SOURCE_ID", "")
+    field_12807 = data_bx24.get("UF_CRM_1750755925", "")
+    field_13141 = data_bx24.get("UF_CRM_1750752148", "")
+    # field_ = data_bx24.get("", "")
     
     
         

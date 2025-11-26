@@ -59,7 +59,7 @@ async def deal(data):
     field_12805 = data_bx24.get("UF_CRM_1750755776", "")
     field_12806 = data_bx24.get("UF_CRM_1750755907", "")
     field_12808 = data_bx24.get("UF_CRM_1750755957", "")
-    field_13300 = await get_worker_from_rukovoditel(await get_worker_from_bx24(data_bx24.get("UF_CRM_1750756012", "")))
+    #field_13300 = await get_worker_from_rukovoditel(await get_worker_from_bx24(data_bx24.get("UF_CRM_1750756012", "")))
     field_12810 = await get_company_from_rukovoditel_btg_company(await get_inn_bx24(data_bx24.get("UF_CRM_1750756090", "")))
     field_12811 = data_bx24.get("UF_CRM_1750756250", "")
     field_12812 = data_bx24.get("UF_CRM_1750756289", "")

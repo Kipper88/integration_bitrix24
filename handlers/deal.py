@@ -31,7 +31,7 @@ async def deal(data):
     ###########################################################
 
     id_worker_bx24 = str(data_bx24.get("ASSIGNED_BY_ID", "")) or ""
-    name_bx24 = str(await get_worker_from_bx24(id_worker_bx24) or "")
+    name_bx24 = str(await get_worker_from_bx24(id_worker_bx24) or "") if id_worker_bx24 != "" else ""
     id_worker_rukovoditel = str(await get_worker_from_rukovoditel(name_bx24) or "")
 
     route_value = data_bx24.get("UF_CRM_683EA5EE6C732", [])
@@ -85,7 +85,7 @@ async def deal(data):
     
     field_13136 = f13136_dict_deal.get(data_bx24.get("UF_CRM_1751530362", ""), "")
     
-    field_13503 = await get_worker_from_rukovoditel(await get_worker_from_bx24(data_bx24.get("UF_CRM_1751441910", "")))
+    field_13503 = await get_worker_from_rukovoditel(await get_worker_from_bx24(data_bx24.get("UF_CRM_1751441910", ""))) if data_bx24.get("UF_CRM_1751441910") not in (None, "") else ""
     field_12839 = data_bx24.get("UF_CRM_1751614495", "")
     field_12835 = data_bx24.get("UF_CRM_1762430319", "")
     field_12836 = data_bx24.get("UF_CRM_1762430335", "")

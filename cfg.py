@@ -16,6 +16,7 @@ temp_json_file = os.path.join(script_dir, 'temp/latest_bx24/temp_leads.json')
 if not apiKey or not username or not passw or not keyWebhookBX24 or not prefix_bx24 or not userId_bx24:
     raise SystemExit("Не все параметры заполнены в .env")
 
+empty = ""
 
 directions = {
     "214": "6744",
